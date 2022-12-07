@@ -48,9 +48,11 @@ func handleConnection(c net.Conn) {
 		if er != nil {
 			break
 		}
+
+		fmt.Printf("Connection from %v closed.\n", c.RemoteAddr())
 	}
 
 	// defer c.Close()
 	// io.Copy(c, c)
-	fmt.Printf("Connection from %v closed.\n", c.RemoteAddr())
+	// fmt.Printf("Connection from %v closed.\n", c.RemoteAddr())
 }

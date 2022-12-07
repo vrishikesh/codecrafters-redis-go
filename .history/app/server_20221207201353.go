@@ -39,8 +39,7 @@ func handleConnection(c net.Conn) {
 	for {
 		n, er := c.Read(buf)
 		if n > 0 {
-			// _, ew := c.Write(buf[:n])
-			_, ew := c.Write([]byte("+PONG\r\n"))
+			_, ew := c.Write(buf[:n])
 			if ew != nil {
 				break
 			}
@@ -48,9 +47,17 @@ func handleConnection(c net.Conn) {
 		if er != nil {
 			break
 		}
+
+		_, err := c.Write([]byte("+PONG\r\n"))
+		if err != nil {
+			fmt.Println("Error writing to connection: ", err.Error())
+			os.Exit(1)
+		}
+
+		fmt.Printf("Connection from %v closed.\n", c.RemoteAddr())
 	}
 
 	// defer c.Close()
 	// io.Copy(c, c)
-	fmt.Printf("Connection from %v closed.\n", c.RemoteAddr())
+	// fmt.Printf("Connection from %v closed.\n", c.RemoteAddr())
 }
