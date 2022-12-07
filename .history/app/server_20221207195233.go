@@ -20,7 +20,7 @@ func main() {
 	}
 
 	for {
-		fmt.Println("Starting server")
+		fmt.Println("starting")
 		conn, err := l.Accept()
 		if err != nil {
 			fmt.Println("Error accepting connection: ", err.Error())
@@ -33,7 +33,6 @@ func main() {
 			os.Exit(1)
 		}
 
-		fmt.Println("Closing connection")
 		err = conn.Close()
 		if err != nil {
 			fmt.Println("Error closing connection: ", err.Error())

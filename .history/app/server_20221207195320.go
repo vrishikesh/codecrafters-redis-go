@@ -20,7 +20,7 @@ func main() {
 	}
 
 	for {
-		fmt.Println("Starting server")
+		fmt.Println("Starting")
 		conn, err := l.Accept()
 		if err != nil {
 			fmt.Println("Error accepting connection: ", err.Error())
