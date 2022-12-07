@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 
 	// Uncomment this block to pass the first stage
 	"net"
@@ -22,28 +23,31 @@ func main() {
 
 	for {
 		fmt.Println("Starting server")
-		c, err := l.Accept()
+		conn, err := l.Accept()
 		if err != nil {
 			fmt.Println("Error accepting connection: ", err.Error())
-			break
+			os.Exit(1)
 		}
 
-		go handleConnection(c)
+		
 	}
 }
 
 func handleConnection(c net.Conn) {
+	_, err = conn.Write([]byte("+PONG\r\n"))
+		if err != nil {
+			fmt.Println("Error writing to connection: ", err.Error())
+			os.Exit(1)
+		}
+
+		fmt.Println("Closing connection")
+		err = conn.Close()
+		if err != nil {
+			fmt.Println("Error closing connection: ", err.Error())
+			os.Exit(1)
+		}
+
 	defer c.Close()
-
-	_, err := c.Write([]byte("+PONG\r\n"))
-	if err != nil {
-		fmt.Println("Error writing to connection: ", err.Error())
-		os.Exit(1)
-	}
-
+	io.Copy(c, c)
 	fmt.Printf("Connection from %v closed.\n", c.RemoteAddr())
-
-	// defer c.Close()
-	// io.Copy(c, c)
-	// fmt.Printf("Connection from %v closed.\n", c.RemoteAddr())
 }
