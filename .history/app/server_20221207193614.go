@@ -20,14 +20,12 @@ func main() {
 	}
 
 	for {
-		fmt.Println("starting")
 		conn, err := l.Accept()
 		if err != nil {
 			fmt.Println("Error accepting connection: ", err.Error())
 			os.Exit(1)
 		}
 
-		fmt.Println("completed")
 		fmt.Fprintf(conn, "+PONG\r\n")
 	}
 }
